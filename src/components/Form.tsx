@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, DetailedHTMLProps, ImgHTMLAttributes} from 'react';
+import styled, {ThemedStyledProps} from 'styled-components';
 import { 
     StyledButton,
     StyledButtonContainer,
@@ -15,36 +15,60 @@ import {
     PlanName,
     PlanPrice,
     Card,
-    
+    ThankYouContainer,
+    FormInputContainer,
+    PlanImage,  
 } from './FormElements';
 import img from '../assets/sidebardesktop.svg';
+import thankyouicon from '../assets/icon-thank-you.svg';
+import imgmobile from '../assets/bg-sidebar-mobile.svg';
+import arcadeimg from '../assets/icon-arcade.svg';
+import advancedimg from '../assets/icon-advanced.svg';
+import proimg from '../assets/icon-pro.svg';
+
+interface StyledImageProps extends DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
+  mobileSrc: string;
+}
 
 const GridContainer = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 2fr;
   grid-gap: 70px;
   align-items: center;
+  @media screen and (max-width: 767px){
+    grid-template-columns: auto 1fr;
+    
+  }
 `;
 
 const StyledImageContainer = styled.div`
   position: relative;
   height: 100%;
+  display: flex;
+  align-items: flex-start; /* align items to the top of the container */
+  
+  @media (max-width: 768px) { /* adjust the max-width value as needed */
+    justify-content: center; /* center items horizontally on small screens */
+  }
 `;
 
-const StyledImage = styled.img`
-height: 80vh;
+const StyledImage = styled.img<StyledImageProps>`
+  height: 100%;
+  @media screen and (max-width: 767px) {
+    content: url(${props => props.mobileSrc});
+    width: auto;
+    height: auto;
 
-;`
+  }
+`;
 
 const StepperContainer = styled.div`
-position: absolute;
-top: 30%;
-left: 30%;
-transform: translate(-50%, -50%);
-margin-top: -40px;
+ position: absolute;
+ top: 30px;
+ left: 30px;
+ transform: translate(30%, 15%);
 `;
-
 
 const Stepper = styled.div`
   display: flex;
@@ -79,13 +103,18 @@ const StepperItem = styled.div`
 const StepperItemContainer = styled.div`
   display: flex;
   align-items: center;
+  @media screen and (max-width: 767px){
+    justify-content: center;
+  }
 `;
 
 const StepperLabelContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  margin-left: 8px;
+  flex-grow: 1;
+  @media screen and (max-width: 767px){
+    display: none;
+  }
 `;
 
 const StepperLabel = styled.div`
@@ -103,8 +132,6 @@ const StepperText = styled.p`
   text-transform: uppercase;
 `;
 
-
-
 const FormContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -112,12 +139,16 @@ const FormContent = styled.div`
 `;
 
 const ErrorMessage = styled.p`
+  display: flex;
   color: red;
   font-size: 12px;
 `;
 
+const SidebarContainer = styled.div`
+`
 const Form = () => {
 const [currentStep, setCurrentStep] = useState(1);
+const [selectedPlan, setSelectedPlan] = useState('');
 
 const [formData, setFormData] = useState({
     name: '',
@@ -179,11 +210,14 @@ const [formData, setFormData] = useState({
     setFormErrors({ name: '', email: '', phone: '' });
   };
   
+  const handlePlanEvent = (plan: string) => {
+    setSelectedPlan(plan)
+  }
   return (
     <StyledContainer>
       <GridContainer>
         <StyledImageContainer>
-          <StyledImage src={img} alt="sidebar" />
+          <StyledImage src={img} mobileSrc={imgmobile} alt="sidebar" />
           <StepperContainer>
           <Stepper>
   <StepperItemContainer>
@@ -221,8 +255,11 @@ const [formData, setFormData] = useState({
         <FormContent>
           <StyledForm>
           <StyledH2>Personal info</StyledH2>
-          <StyledText>Please provide your name, email address, and phone number</StyledText>
-          <StyledLabel htmlFor="name">Name</StyledLabel>
+          <StyledText style={{paddingRight: '50px'}}>Please provide your name, email address, and phone number</StyledText>
+<FormInputContainer> 
+<StyledLabel htmlFor="name">Name</StyledLabel>
+{formErrors.name && <ErrorMessage>{formErrors.name}</ErrorMessage>}
+</FormInputContainer>         
 <StyledInput
   type="text"
   name="name"
@@ -231,9 +268,10 @@ const [formData, setFormData] = useState({
   value={formData.name}
   onChange={handleInputChange}
 />
-{formErrors.name && <ErrorMessage>{formErrors.name}</ErrorMessage>}
-
+<FormInputContainer>
 <StyledLabel htmlFor="email">Email Address</StyledLabel>
+{formErrors.email && <ErrorMessage>{formErrors.email}</ErrorMessage>}
+</FormInputContainer>
 <StyledInput
   type="email"
   name="email"
@@ -242,9 +280,10 @@ const [formData, setFormData] = useState({
   value={formData.email}
   onChange={handleInputChange}
 />
-{formErrors.email && <ErrorMessage>{formErrors.email}</ErrorMessage>}
-
+<FormInputContainer>
 <StyledLabel htmlFor="phone">Phone Number</StyledLabel>
+{formErrors.phone && <ErrorMessage>{formErrors.phone}</ErrorMessage>}
+</FormInputContainer>
 <StyledInput
   type="tel"
   name="phone"
@@ -253,10 +292,9 @@ const [formData, setFormData] = useState({
   value={formData.phone}
   onChange={handleInputChange}
 />
-{formErrors.phone && <ErrorMessage>{formErrors.phone}</ErrorMessage>}
           </StyledForm>
           <StyledButtonContainer>
-            <StyledButton type='submit'onClick={handleNextStep}>Next Step</StyledButton>
+            <StyledButton  type='submit'onClick={handleNextStep}>Next Step</StyledButton>
             </StyledButtonContainer>
         </FormContent>
         )}
@@ -266,17 +304,20 @@ const [formData, setFormData] = useState({
         <StyledH2>Select Your Plan</StyledH2>
         <StyledText>You have the option of monthly or yearly billing</StyledText>
         <StyledPlanContainer>
-          <Card>
+        <Card onClick={() => handlePlanEvent("Arcade")} isSelected={selectedPlan === "Arcade"}>
+            <PlanImage src={arcadeimg}/>
             <PlanName>Arcade</PlanName>
             <PlanPrice>$90/yr</PlanPrice>
             <PlanFrequency>2 months free</PlanFrequency>
           </Card>
-          <Card>
+          <Card onClick={() => handlePlanEvent("Advanced")} isSelected={selectedPlan === "Advanced"}>
+            <PlanImage src={advancedimg}></PlanImage>
             <PlanName>Advanced</PlanName>
             <PlanPrice>$120/yr</PlanPrice>
             <PlanFrequency>2 months free</PlanFrequency>
           </Card>
-          <Card>
+          <Card onClick={() => handlePlanEvent("Pro")} isSelected={selectedPlan === "Pro"}>
+        <PlanImage src={proimg}></PlanImage>
             <PlanName>Pro</PlanName>
             <PlanPrice>$150/yr</PlanPrice>
             <PlanFrequency>2 months free</PlanFrequency>
@@ -288,6 +329,42 @@ const [formData, setFormData] = useState({
                <StyledButton type='submit' onClick={handleNextStep}>Next Step</StyledButton>
              </StyledButtonContainer>
            </FormContent>
+        )}
+        {currentStep === 3 && (
+          <FormContent>
+            <StyledForm>
+            <StyledH2>Pick add-ons</StyledH2>
+            <StyledText>Add-ons help enhance your gaming experince</StyledText>
+            </StyledForm>
+            <StyledButtonContainer>
+              <StyledPrevButton onClick={() => setCurrentStep(currentStep -1)}>Previous Step</StyledPrevButton>
+              <StyledButton type='submit' onClick={handleNextStep}>Next Step</StyledButton>
+            </StyledButtonContainer>
+          </FormContent>
+        )}
+        {currentStep === 4 &&(
+          <FormContent>
+            <StyledForm>
+              <StyledH2>Finishing up</StyledH2>
+              <StyledText>Double-check everything looks OK before confirming</StyledText>
+            </StyledForm>
+            <StyledButtonContainer>
+              <StyledPrevButton onClick={() => setCurrentStep(currentStep - 1)}>Previous Step</StyledPrevButton>
+              <StyledButton type='submit' onClick={(handleNextStep)}>Next Step</StyledButton>
+            </StyledButtonContainer>
+          </FormContent>
+        )}
+        {currentStep === 5 &&(
+          <ThankYouContainer>
+            <img src={thankyouicon}></img>
+            <StyledH2>Thank you!</StyledH2>
+            <StyledText>
+            Thanks for confirming your subscription! 
+            We hope you have fun using our platform.
+            If you ever need support, please feel free to
+            email us at support @loremgaming.com
+            </StyledText>
+          </ThankYouContainer>
         )}
       </GridContainer>
     </StyledContainer>

@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 
 export const StyledContainer = styled.div`
-width: 100vh;
-margin-auto: 0;
-height: 80vh;
 border-radius: 18px;
 background-color: #FFF;
 
@@ -32,15 +29,17 @@ display: flex;
 justify-content: center;
 align-items: flex-start;
 flex-direction: column;
-
 `
-
 export const StyledLabel = styled.label`
-padding-right: 140px;
 color: hsl(213, 96%, 18%);
 font-weight: 700;
 `
-
+export const FormInputContainer = styled.div`
+display: flex;
+align-items: center;
+justify-content: space-between;
+width: 80%;
+`
 export const StyledInput = styled.input`
 font-size: 16px;
 font-weight: 300;
@@ -48,20 +47,22 @@ border-radius: 10px;
 width: 80%;
 color: hsl(213, 96%, 18%);
 background-color: #fff;
-gap: 30px;
-margin-bottom: 20px;
+margin-bottom: 40px;
 padding: 15px;
+:invalid{
+  outline: 1px solid red;
+}
 `
 
 export const StyledButton = styled.button`
-font size: 20px;
+font-size: 20px;
 font-weight: 700;
 background-color: hsl(213, 96%, 18%);
 color: #fff;
 `
 
 export const StyledPrevButton = styled.button`
-font size: 20px;
+font-size: 20px;
 font-weight: 700;
 border: none;
 background: none;
@@ -70,26 +71,21 @@ color: hsl(213, 96%, 18%);
 export const StyledPlanContainer = styled.div`
 display: grid;
 grid-template-columns: repeat(3, 1fr);
-gap: 20px; // set the gap value
+grid-gap: 20px;
 `
-export const Card = styled.div`
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 24px;
-  text-align: center;
-  width: 100px;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
+export const Card = styled.div<{isSelected: boolean}>`
+border: 1px solid ${props => props.isSelected ? 'hsl(243, 100%, 62%)' : 'hsl(229, 24%, 87%)'};
+background-color: transparent;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+padding: 24px;
+margin-right: 30px;
+cursor: pointer;
 `;
 
 export const PlanName = styled.h3`
   font-size: 24px;
-  color: #000;
+  color: hsl(213, 96%, 18%);
 `;
 
 export const PlanPrice = styled.p`
@@ -102,10 +98,15 @@ export const PlanFrequency = styled.p`
   color: #000;
 `;
 
+export const PlanImage = styled.img`
+width: 50px;
+height: 50px;
+`
+
 export const StyledButtonContainer = styled.div`
 display: flex;
-justify-content: flex-end;
-width: 80%;
+justify-content: space-around;
+padding-bottom: 40px;
 `
 export const GridContainer = styled.div`
   display: grid;
@@ -116,6 +117,10 @@ export const GridContainer = styled.div`
 
 export const StyledImageContainer = styled.div`
 height: 100%;
+@media screen and (max-width: 767px) {
+  order: -1;
+  
+}
   img {
     width: 100%;
     height: 100%;
@@ -127,3 +132,13 @@ export const FormContent = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const AddOnCard = styled.div`
+background-color: transparent;
+`
+export const ThankYouContainer = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+`
