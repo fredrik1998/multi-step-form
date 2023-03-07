@@ -17,7 +17,10 @@ import {
     Card,
     ThankYouContainer,
     FormInputContainer,
-    PlanImage,  
+    PlanImage,
+    PlanToggle,
+    PlanToggleContainer,
+    PlanText,  
 } from './FormElements';
 import img from '../assets/sidebardesktop.svg';
 import thankyouicon from '../assets/icon-thank-you.svg';
@@ -144,11 +147,11 @@ const ErrorMessage = styled.p`
   font-size: 12px;
 `;
 
-const SidebarContainer = styled.div`
-`
 const Form = () => {
 const [currentStep, setCurrentStep] = useState(1);
 const [selectedPlan, setSelectedPlan] = useState('');
+
+const [isToggled, setIsToggled] = useState(false);
 
 const [formData, setFormData] = useState({
     name: '',
@@ -211,7 +214,11 @@ const [formData, setFormData] = useState({
   };
   
   const handlePlanEvent = (plan: string) => {
-    setSelectedPlan(plan)
+    setSelectedPlan(plan);
+  }
+
+  const handleToggleEvent = () => {
+    setIsToggled(!isToggled)
   }
   return (
     <StyledContainer>
@@ -300,36 +307,50 @@ const [formData, setFormData] = useState({
         )}
         {currentStep === 2 && (
              <FormContent>
-              <StyledForm>
-        <StyledH2>Select Your Plan</StyledH2>
-        <StyledText>You have the option of monthly or yearly billing</StyledText>
-        <StyledPlanContainer>
-        <Card onClick={() => handlePlanEvent("Arcade")} isSelected={selectedPlan === "Arcade"}>
-            <PlanImage src={arcadeimg}/>
-            <PlanName>Arcade</PlanName>
-            <PlanPrice>$90/yr</PlanPrice>
-            <PlanFrequency>2 months free</PlanFrequency>
-          </Card>
-          <Card onClick={() => handlePlanEvent("Advanced")} isSelected={selectedPlan === "Advanced"}>
-            <PlanImage src={advancedimg}></PlanImage>
-            <PlanName>Advanced</PlanName>
-            <PlanPrice>$120/yr</PlanPrice>
-            <PlanFrequency>2 months free</PlanFrequency>
-          </Card>
-          <Card onClick={() => handlePlanEvent("Pro")} isSelected={selectedPlan === "Pro"}>
-        <PlanImage src={proimg}></PlanImage>
-            <PlanName>Pro</PlanName>
-            <PlanPrice>$150/yr</PlanPrice>
-            <PlanFrequency>2 months free</PlanFrequency>
-          </Card>
-        </StyledPlanContainer>
-      </StyledForm>
+             <StyledForm>
+               <StyledH2>Select Your Plan</StyledH2>
+               <StyledText>You have the option of monthly or yearly billing</StyledText>
+               <StyledPlanContainer>
+               
+                     <Card onClick={() => handlePlanEvent("Arcade")} isSelected={selectedPlan === "Arcade"}>
+                     <PlanImage src={arcadeimg} />
+                     <PlanName>Arcade</PlanName>
+                     <PlanPrice>{isToggled ? '$9.99/mo' : '$90/yr'}</PlanPrice>
+                     <PlanFrequency>{isToggled ? '' : '2 months free'}</PlanFrequency>
+                   </Card>
+              
+                 
+                   <Card onClick={() => handlePlanEvent("Advanced")} isSelected={selectedPlan === "Advanced"}>
+                     <PlanImage src={advancedimg} />
+                     <PlanName>Advanced</PlanName>
+                     <PlanPrice>{isToggled ? '$12.99/mo' : '$120/yr'}</PlanPrice>
+                     <PlanFrequency>{isToggled ? '' : '2 months free'}</PlanFrequency>
+                   </Card>
+               
+                
+                   <Card onClick={() => handlePlanEvent("Pro")} isSelected={selectedPlan === "Pro"}>
+                     <PlanImage src={proimg} />
+                     <PlanName>Pro</PlanName>
+                     <PlanPrice>{isToggled ? '$14.99/mo' : '$150/yr'}</PlanPrice>
+                     <PlanFrequency>{isToggled ? '' : '2 months free'}</PlanFrequency>
+                   </Card>
+              
+               </StyledPlanContainer>
+             </StyledForm>
+             <PlanToggleContainer>
+             <PlanText isToggled={!isToggled}>Yearly</PlanText>
+             <PlanToggle type='button' onClick={handleToggleEvent} isToggled={isToggled}>
+                   {isToggled }
+                 </PlanToggle>
+                 <PlanText isToggled={isToggled}>Monthly</PlanText>
+                 </PlanToggleContainer>
              <StyledButtonContainer>
                <StyledPrevButton onClick={() => setCurrentStep(currentStep - 1)}>Previous Step</StyledPrevButton>
-               <StyledButton type='submit' onClick={handleNextStep}>Next Step</StyledButton>
+               <StyledButton disabled={!selectedPlan} type='submit' onClick={handleNextStep}>Next Step</StyledButton>
              </StyledButtonContainer>
            </FormContent>
-        )}
+         )
+       }
         {currentStep === 3 && (
           <FormContent>
             <StyledForm>

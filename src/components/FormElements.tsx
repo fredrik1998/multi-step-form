@@ -59,8 +59,12 @@ font-size: 20px;
 font-weight: 700;
 background-color: hsl(213, 96%, 18%);
 color: #fff;
+:disabled{
+  color: white;
+  background-color: #ccc;
+  cursor: not-allowed;
+}
 `
-
 export const StyledPrevButton = styled.button`
 font-size: 20px;
 font-weight: 700;
@@ -71,7 +75,7 @@ color: hsl(213, 96%, 18%);
 export const StyledPlanContainer = styled.div`
 display: grid;
 grid-template-columns: repeat(3, 1fr);
-grid-gap: 20px;
+grid-gap: 5px;
 `
 export const Card = styled.div<{isSelected: boolean}>`
 border: 1px solid ${props => props.isSelected ? 'hsl(243, 100%, 62%)' : 'hsl(229, 24%, 87%)'};
@@ -90,22 +94,54 @@ export const PlanName = styled.h3`
 
 export const PlanPrice = styled.p`
   font-size: 16px;
-  color: #000
+  color: hsl(231, 11%, 63%);
 `;
 
 export const PlanFrequency = styled.p`
   font-size: 16px;
-  color: #000;
+  color: hsl(213, 96%, 18%);
 `;
+
+export const PlanText = styled.p<{ isToggled: boolean }>`
+font-size: 16px;
+margin-bottom: 20px;
+color: ${({isToggled}) => (isToggled ? 'hsl(213, 96%, 18%)' : 'hsl(229, 24%, 87%)')};
+`
 
 export const PlanImage = styled.img`
 width: 50px;
 height: 50px;
 `
+export const PlanToggle = styled.button<{ isToggled: boolean }>`
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-top: 15px;
+  border-radius: 30px;
+  background-color: ${({ isToggled }) => (isToggled ? 'hsl(213, 96%, 18%)' : 'hsl(213, 96%, 18%)')};
+  transition: background-color 0.3s ease;
 
+  &::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: ${({ isToggled }) => (isToggled ? '26px' : '2px')};
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: ${({isToggled}) => (isToggled ? 'hsl(0, 0%, 100%)' : 'hsl(0, 0%, 100%)' )};
+    transition: left 0.3s ease;
+  }
+`;
+
+export const PlanToggleContainer = styled.div`
+display: flex;
+justify-content: space-evenly
+`
 export const StyledButtonContainer = styled.div`
 display: flex;
-justify-content: space-around;
+justify-content: space-evenly;
 padding-bottom: 40px;
 `
 export const GridContainer = styled.div`
