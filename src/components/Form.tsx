@@ -20,7 +20,8 @@ import {
     PlanImage,
     PlanToggle,
     PlanToggleContainer,
-    PlanText,  
+    PlanText,
+    Box,
 } from './FormElements';
 import img from '../assets/sidebardesktop.svg';
 import thankyouicon from '../assets/icon-thank-you.svg';
@@ -356,6 +357,7 @@ const [formData, setFormData] = useState({
             <StyledForm>
             <StyledH2>Pick add-ons</StyledH2>
             <StyledText>Add-ons help enhance your gaming experince</StyledText>
+           
             </StyledForm>
             <StyledButtonContainer>
               <StyledPrevButton onClick={() => setCurrentStep(currentStep -1)}>Previous Step</StyledPrevButton>

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 export const StyledContainer = styled.div`
 border-radius: 18px;
 background-color: #FFF;
+width: 100%;
+
 
 @media screen and (max-width: 600px) {
     width: 100%;
@@ -80,6 +82,8 @@ grid-gap: 5px;
 export const Card = styled.div<{isSelected: boolean}>`
 border: 1px solid ${props => props.isSelected ? 'hsl(243, 100%, 62%)' : 'hsl(229, 24%, 87%)'};
 background-color: transparent;
+width: 150px;
+height: 200px;
 border-radius: 8px;
 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 padding: 24px;
@@ -101,6 +105,16 @@ export const PlanFrequency = styled.p`
   font-size: 16px;
   color: hsl(213, 96%, 18%);
 `;
+
+export const Box = styled.div<{isSelected: boolean}>`
+border: 1px solid ${props => props.isSelected ? 'hsl(243, 100%, 62%)' : 'hsl(229, 24%, 87%)'};
+height: 50px;
+width: 200px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+padding: 24px;
+margin-right: 30px;
+cursor: pointer;
+`
 
 export const PlanText = styled.p<{ isToggled: boolean }>`
 font-size: 16px;
@@ -177,4 +191,6 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
+width: 500px;
+margin-right: 40px;
 `
