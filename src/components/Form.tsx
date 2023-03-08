@@ -26,6 +26,14 @@ import {
     BoxText,
     BoxPrice,
     BoxInput,
+    PriceDiv,
+    Step4Text,
+    ChangeButton,
+    Step4AddOns,
+    Step4AddOnsContainer,
+    TotalDiv,
+    Step4Price,
+    TotalPrice
 } from './FormElements';
 import img from '../assets/sidebardesktop.svg';
 import thankyouicon from '../assets/icon-thank-you.svg';
@@ -157,7 +165,7 @@ const ErrorMessage = styled.p`
 const Form = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedPlan, setSelectedPlan] = useState('');
-  const [selectedAddOns, setSelectedAddOns] = useState('');
+  const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const [isToggled, setIsToggled] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -228,14 +236,52 @@ const [formData, setFormData] = useState({
     setIsToggled(!isToggled)
   }
 
-  const handleAddOnsEvent = (addOns: string) => {
-    setSelectedAddOns(addOns)
-  }
+  const handleAddOnsEvent = (addOn: string) => {
+    if (selectedAddOns.includes(addOn)) {
+      setSelectedAddOns(selectedAddOns.filter((item: string) => item !== addOn));
+    } else {
+      setSelectedAddOns([...selectedAddOns, addOn]);
+    }
+  };
 
   const handleBoxClick = (event: React.MouseEvent<HTMLButtonElement>) => {
    setIsChecked(!isChecked);
+   console.log('clicked!')
   };
 
+  const planPrices: {[key: string] : {monthly: number; yearly: number}} = {
+    'Arcade': {
+      monthly: 9,
+      yearly: 90,
+    },
+    'Advanced': {
+      monthly: 12,
+      yearly: 120,
+    }, 
+    'Pro': {
+      monthly: 9,
+      yearly: 150,
+    }, 
+  }
+
+  const addOnPrices: { [key: string]: { monthly: number; yearly: number } } = {
+    'Online service': {
+      monthly: 1,
+      yearly: 10,
+    },
+    'Larger storage': {
+      monthly: 2,
+      yearly: 20,
+    },
+    'Customizable profile': {
+      monthly: 2,
+      yearly: 20,
+    },
+  };
+
+  const planPrice = selectedPlan && isToggled ? planPrices[selectedPlan].monthly : selectedPlan && planPrices[selectedPlan].yearly || 0;
+  const addOnsTotal = selectedAddOns.reduce((total, addOn) => total + (isToggled ? addOnPrices[addOn].monthly : addOnPrices[addOn].yearly), 0);
+  const totalPrice = planPrice + addOnsTotal;
 
   return (
     <StyledContainer>
@@ -373,26 +419,31 @@ const [formData, setFormData] = useState({
             <StyledForm>
             <StyledH2>Pick add-ons</StyledH2>
             <StyledText>Add-ons help enhance your gaming experince</StyledText>
-            <Box onClick={() => handleAddOnsEvent('Online service')} isSelected={selectedAddOns === 'Online service'}>
+            <Box
+            onClick={() => handleAddOnsEvent('Online service')}
+            isSelected={selectedAddOns.includes('Online service')}>
             <BoxInput onClick={handleBoxClick} type='button'>
-            {isChecked ? <img src={checkmark} alt="checked" /> : null}
-        
-      </BoxInput>
+    {isChecked ? (
+      <img src={checkmark} alt="checked" />
+    ) : null}
+  </BoxInput>
             <BoxName>Online service</BoxName>
             <BoxText>Access to multiplayer games</BoxText>
             <BoxPrice>{isToggled ? '+$1/mo' : '+$10/yr'}</BoxPrice>
             </Box>
-           
-            <Box onClick={() => handleAddOnsEvent('Larger storage')} isSelected={selectedAddOns === 'Larger storage'}>
+            <Box 
+            onClick={() => handleAddOnsEvent('Larger storage')} 
+            isSelected={selectedAddOns.includes('Larger storage')}>
             <BoxInput onClick={handleBoxClick} type='button'>
             {isChecked ? <img src={checkmark} alt="checked" /> : null}
-         
       </BoxInput>
             <BoxName>Larger storage</BoxName>
             <BoxText>Extra 1TB of cloud save</BoxText>
             <BoxPrice>{isToggled ? '+$2/mo' : '+$20/yr'}</BoxPrice>
             </Box>
-            <Box onClick={() => handleAddOnsEvent('Customizable profile')} isSelected={selectedAddOns === 'Customizable profile'}>
+            <Box 
+            onClick={() => handleAddOnsEvent('Customizable profile')} 
+            isSelected={selectedAddOns.includes('Customizable profile')}>
             <BoxInput onClick={handleBoxClick} type='button'>
             {isChecked ? <img src={checkmark} alt="checked" /> : null}
       </BoxInput>
@@ -400,7 +451,6 @@ const [formData, setFormData] = useState({
             <BoxText>Custom theme on your profile</BoxText>
             <BoxPrice>{isToggled ? '+$2/mo' : '+$20/yr'}</BoxPrice>
             </Box>
-            
             </StyledForm>
             <StyledButtonContainer>
               <StyledPrevButton onClick={() => setCurrentStep(currentStep -1)}>Previous Step</StyledPrevButton>
@@ -413,6 +463,33 @@ const [formData, setFormData] = useState({
             <StyledForm>
               <StyledH2>Finishing up</StyledH2>
               <StyledText>Double-check everything looks OK before confirming</StyledText>
+              <PriceDiv>
+              <Step4Text>
+  {selectedPlan} - $
+  {planPrice}/
+  {isToggled ? 'mo' : 'yr'}
+</Step4Text>
+
+                <ChangeButton type='button' onClick={handleToggleEvent}>
+                   Change
+                 </ChangeButton>
+              </PriceDiv>
+              <PriceDiv>
+              <Step4AddOnsContainer>
+              {selectedAddOns.map((addOn) => (
+  <Step4AddOns key={addOn}>
+    {addOn}
+   <Step4Price> ${isToggled ? addOnPrices[addOn].monthly : addOnPrices[addOn].yearly}/
+    {isToggled ? 'mo' : 'yr'} </Step4Price> 
+  </Step4AddOns>
+))}
+
+      </Step4AddOnsContainer>
+              </PriceDiv>
+              <TotalDiv>
+              <Step4AddOns>Total</Step4AddOns>
+              <TotalPrice>${totalPrice}/{isToggled ? 'mo' : 'yr'}</TotalPrice>
+              </TotalDiv>
             </StyledForm>
             <StyledButtonContainer>
               <StyledPrevButton onClick={() => setCurrentStep(currentStep - 1)}>Previous Step</StyledPrevButton>

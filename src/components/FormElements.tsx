@@ -144,15 +144,16 @@ font-weight: 700;
 `
 
 export const BoxInput = styled.button`
-display: flex;
-z-index: 1:
-align-items: center;
-background: transparent;
-width: 20px;
-height: 20px;
-cursor: pointer;
-margin-top: 20px;
-border-radius: 5px;`
+  display: flex;
+  z-index: 1;
+  align-items: center;
+  background: transparent;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 5px;
+`;
 
 export const PlanText = styled.p<{ isToggled: boolean }>`
 font-size: 16px;
@@ -222,6 +223,65 @@ export const FormContent = styled.div`
 
 export const AddOnCard = styled.div`
 background-color: transparent;
+`
+export const PriceDiv = styled.div`
+background-color: hsl(229, 24%, 87%);
+border-radius: 18px;
+width: 400px;
+margin-right: 40px;
+margin-top: 20px;
+padding: 14px;
+`
+
+export const TotalDiv = styled.div`
+background-color: transparent;
+border-radius: 18px;
+width: 400px;
+margin-right: 40px;
+margin-top: 20px;
+padding: 14px;
+`
+
+export const Step4Text = styled.div`
+font-size: 16px;
+font-weight: 700;
+color: hsl(213, 96%, 18%);
+`
+export const ChangeButton = styled.button`
+color: hsl(231, 11%, 63%);
+border: none;
+background: none;
+text-decoration: underline;
+cursor: pointer;
+:hover{
+  color: hsl(243, 100%, 62%);
+}`
+
+export const Step4AddOns = styled.p`
+color: hsl(231, 11%, 63%);
+font-size: 14px;
+`
+
+export const Step4Price = styled.p`
+display: flex;
+justify-content: flex-end;
+color: hsl(243, 100%, 62%);
+font-size: 14px;
+font-weight: 700;
+margin-top: -20px;
+`
+
+export const TotalPrice = styled.em`
+display: flex;
+justify-content: flex-end;
+color: hsl(243, 100%, 62%);
+font-size: 18px;
+font-weight: 700;
+margin-top: -40px;
+`
+export const Step4AddOnsContainer = styled.div`
+display: flex;
+flex-direction: column;
 `
 export const ThankYouContainer = styled.div`
 display: flex;
