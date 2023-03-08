@@ -22,6 +22,10 @@ import {
     PlanToggleContainer,
     PlanText,
     Box,
+    BoxName,
+    BoxText,
+    BoxPrice,
+    BoxInput,
 } from './FormElements';
 import img from '../assets/sidebardesktop.svg';
 import thankyouicon from '../assets/icon-thank-you.svg';
@@ -29,6 +33,7 @@ import imgmobile from '../assets/bg-sidebar-mobile.svg';
 import arcadeimg from '../assets/icon-arcade.svg';
 import advancedimg from '../assets/icon-advanced.svg';
 import proimg from '../assets/icon-pro.svg';
+import checkmark from '../assets/icon-checkmark.svg';
 
 interface StyledImageProps extends DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> {
   mobileSrc: string;
@@ -148,11 +153,13 @@ const ErrorMessage = styled.p`
   font-size: 12px;
 `;
 
-const Form = () => {
-const [currentStep, setCurrentStep] = useState(1);
-const [selectedPlan, setSelectedPlan] = useState('');
 
-const [isToggled, setIsToggled] = useState(false);
+const Form = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [selectedPlan, setSelectedPlan] = useState('');
+  const [selectedAddOns, setSelectedAddOns] = useState('');
+  const [isToggled, setIsToggled] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
 const [formData, setFormData] = useState({
     name: '',
@@ -200,7 +207,6 @@ const [formData, setFormData] = useState({
     }));
   };
   
-
   const handleNextStep = () => {
     if (!formData.name || !formData.email || !formData.phone) {
       setFormErrors({
@@ -221,6 +227,16 @@ const [formData, setFormData] = useState({
   const handleToggleEvent = () => {
     setIsToggled(!isToggled)
   }
+
+  const handleAddOnsEvent = (addOns: string) => {
+    setSelectedAddOns(addOns)
+  }
+
+  const handleBoxClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+   setIsChecked(!isChecked);
+  };
+
+
   return (
     <StyledContainer>
       <GridContainer>
@@ -357,7 +373,34 @@ const [formData, setFormData] = useState({
             <StyledForm>
             <StyledH2>Pick add-ons</StyledH2>
             <StyledText>Add-ons help enhance your gaming experince</StyledText>
+            <Box onClick={() => handleAddOnsEvent('Online service')} isSelected={selectedAddOns === 'Online service'}>
+            <BoxInput onClick={handleBoxClick} type='button'>
+            {isChecked ? <img src={checkmark} alt="checked" /> : null}
+        
+      </BoxInput>
+            <BoxName>Online service</BoxName>
+            <BoxText>Access to multiplayer games</BoxText>
+            <BoxPrice>{isToggled ? '+$1/mo' : '+$10/yr'}</BoxPrice>
+            </Box>
            
+            <Box onClick={() => handleAddOnsEvent('Larger storage')} isSelected={selectedAddOns === 'Larger storage'}>
+            <BoxInput onClick={handleBoxClick} type='button'>
+            {isChecked ? <img src={checkmark} alt="checked" /> : null}
+         
+      </BoxInput>
+            <BoxName>Larger storage</BoxName>
+            <BoxText>Extra 1TB of cloud save</BoxText>
+            <BoxPrice>{isToggled ? '+$2/mo' : '+$20/yr'}</BoxPrice>
+            </Box>
+            <Box onClick={() => handleAddOnsEvent('Customizable profile')} isSelected={selectedAddOns === 'Customizable profile'}>
+            <BoxInput onClick={handleBoxClick} type='button'>
+            {isChecked ? <img src={checkmark} alt="checked" /> : null}
+      </BoxInput>
+            <BoxName>Customizable profile</BoxName>
+            <BoxText>Custom theme on your profile</BoxText>
+            <BoxPrice>{isToggled ? '+$2/mo' : '+$20/yr'}</BoxPrice>
+            </Box>
+            
             </StyledForm>
             <StyledButtonContainer>
               <StyledPrevButton onClick={() => setCurrentStep(currentStep -1)}>Previous Step</StyledPrevButton>

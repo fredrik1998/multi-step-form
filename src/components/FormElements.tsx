@@ -4,13 +4,10 @@ export const StyledContainer = styled.div`
 border-radius: 18px;
 background-color: #FFF;
 width: 100%;
-
-
 @media screen and (max-width: 600px) {
     width: 100%;
     margin: 0;
   }
-
 `
 export const StyledH2 = styled.h2`
 font-size: 32px;
@@ -60,6 +57,9 @@ export const StyledButton = styled.button`
 font-size: 20px;
 font-weight: 700;
 background-color: hsl(213, 96%, 18%);
+border-radius: 18px;
+cursor: pointer;
+padding: 18px;
 color: #fff;
 :disabled{
   color: white;
@@ -72,6 +72,7 @@ font-size: 20px;
 font-weight: 700;
 border: none;
 background: none;
+cursor: pointer;
 color: hsl(213, 96%, 18%);
 `
 export const StyledPlanContainer = styled.div`
@@ -108,20 +109,56 @@ export const PlanFrequency = styled.p`
 
 export const Box = styled.div<{isSelected: boolean}>`
 border: 1px solid ${props => props.isSelected ? 'hsl(243, 100%, 62%)' : 'hsl(229, 24%, 87%)'};
+width: 500px;
 height: 50px;
-width: 200px;
+margin-top: 50px;
+border-radius: 10px;
 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-padding: 24px;
-margin-right: 30px;
+padding: 14px;
+margin-right: 4em;
 cursor: pointer;
 `
+export const BoxName = styled.h4`
+font-size: 18px;
+color: hsl(213, 96%, 18%);
+font-weight: 700;
+margin-left: 50px;
+margin-top: -30px;
+`
+
+export const BoxText = styled.p`
+color: hsl(229, 24%, 87%);
+font-size: 14px;
+margin-top: -30px;
+margin-left: 50px;
+`
+
+export const BoxPrice = styled.p`
+display: flex;
+justify-content: flex-end;
+color: hsl(243, 100%, 62%);
+font-size: 14px;
+margin-top: -45px;
+margin-right: 20px;
+font-weight: 700;
+`
+
+export const BoxInput = styled.button`
+display: flex;
+z-index: 1:
+align-items: center;
+background: transparent;
+width: 20px;
+height: 20px;
+cursor: pointer;
+margin-top: 20px;
+border-radius: 5px;`
 
 export const PlanText = styled.p<{ isToggled: boolean }>`
 font-size: 16px;
 margin-bottom: 20px;
 color: ${({isToggled}) => (isToggled ? 'hsl(213, 96%, 18%)' : 'hsl(229, 24%, 87%)')};
 `
-
 export const PlanImage = styled.img`
 width: 50px;
 height: 50px;
