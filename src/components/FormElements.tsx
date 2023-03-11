@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { DetailedHTMLProps, ImgHTMLAttributes} from 'react';
+import  { DetailedHTMLProps, ImgHTMLAttributes} from 'react';
 export const StyledContainer = styled.div`
 border-radius: 18px;
 background-color: #FFF;
@@ -393,10 +393,9 @@ export const ThankYouContainer = styled.div`
 
 export const StepperContainer = styled.div`
  position: absolute;
-
  top: 30px;
  left: 30px;
- transform: translate(30%, 15%);
+ transform: translate(30%, 10%);
 `;
 export const Stepper = styled.div`
   display: flex;
@@ -437,15 +436,14 @@ export const StepperItemContainer = styled.div`
 `;
 export const StepperLabelContainer = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: column;
-  flex-grow: 1;
   @media screen and (max-width: 767px){
     display: none;
   }
 `;
 export const StepperLabel = styled.div`
-  font-size: 16px;
-  text-align: center;
+  font-size: 14px;
   text-transform: uppercase;
   color: hsl(229, 24%, 87%);
 `;
