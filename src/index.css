@@ -12,29 +12,17 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
-
-
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0;
   display: flex;
   place-items: center;
   min-height: 100vh;
+
 }
 
-
-
-
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.red-outline {
+  border: 1px solid red !important;
 }
