@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { useState, DetailedHTMLProps, ImgHTMLAttributes} from 'react';
+import React, { DetailedHTMLProps, ImgHTMLAttributes} from 'react';
 export const StyledContainer = styled.div`
 border-radius: 18px;
 background-color: #FFF;
@@ -311,10 +311,10 @@ export const PriceDiv = styled.div`
     @media screen and (max-width: 767px) {
       min-width: 250px;
     }
-    @media only screen and (min-width: 768px) { /* adjust this value as per your requirement */
-        width: 60%; /* increase the width of the div for bigger screens */
-        margin-right: 80px; /* increase the margin for bigger screens */
-        padding: 20px; /* increase the padding for bigger screens */
+    @media only screen and (min-width: 768px) { 
+        width: 60%; 
+        margin-right: 80px; 
+        padding: 20px; 
     }
 `
 export const TotalDiv = styled.div`
@@ -328,10 +328,10 @@ export const TotalDiv = styled.div`
     @media screen and (max-width: 767px) {
       min-width: 250px;
     }
-    @media only screen and (min-width: 768px) { /* adjust this value as per your requirement */
-        width: 40%; /* increase the width of the div for bigger screens */
-        margin-right: 80px; /* increase the margin for bigger screens */
-        padding: 20px; /* increase the padding for bigger screens */
+    @media only screen and (min-width: 768px) { 
+        width: 40%;
+        margin-right: 80px; 
+        padding: 20px; 
     }
 `
 export const Step4Text = styled.div`
@@ -353,13 +353,13 @@ cursor: pointer;
 
 export const Step4AddOns = styled.p`
 color: hsl(231, 11%, 63%);
-font-size: 14px;
+font-size: 16px;
 `
 
 export const Step4Price = styled.p`
 display: flex;
 justify-content: flex-end;
-color: hsl(243, 100%, 62%);
+color:  hsl(231, 11%, 63%);
 font-size: 16px;
 font-weight: 700;
 margin-top: -20px;
@@ -393,6 +393,7 @@ export const ThankYouContainer = styled.div`
 
 export const StepperContainer = styled.div`
  position: absolute;
+
  top: 30px;
  left: 30px;
  transform: translate(30%, 15%);
@@ -476,8 +477,9 @@ display: flex;
 justify-content: center;
 align-items: center;
 width: 500px;
-height: 300px;
+height: 100px;
 @media screen and (max-width: 767px) {
+  height: 150px;
   width: 250px;
 
 }`

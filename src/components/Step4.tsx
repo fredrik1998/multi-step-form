@@ -59,7 +59,7 @@ export function Step4({
               <Step4Container>
               <PriceDiv>
               <Step4Text>{selectedPlan}({isToggled ? 'Monthly' : 'Yearly'})</Step4Text>
-              <Step4Price> ${planPrice}/{isToggled ? 'mo' : 'yr'}</Step4Price>
+              <Step4Price style={{color: 'hsl(213, 96%, 18%)'}}> ${planPrice}/{isToggled ? 'mo' : 'yr'}</Step4Price>
                 <ChangeButton type='button' onClick={handleToggleEvent}>
                    Change
                  </ChangeButton>

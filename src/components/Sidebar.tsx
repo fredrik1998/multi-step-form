@@ -29,7 +29,6 @@ export function Sidebar({
         <Stepper>
           <StepperItemContainer>
             <StepperItem className={currentStep >= 1 ? 'active' : ''}>1</StepperItem>
-            
             <StepperLabelContainer>
               <StepperLabel>Step 1</StepperLabel>
               <StepperText>Your Info</StepperText>

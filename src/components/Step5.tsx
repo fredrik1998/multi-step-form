@@ -10,9 +10,11 @@ export function Step5({ thankyouicon }: Props) {
     <ThankYouContainer>
       <img src={thankyouicon} />
       <StyledH2>Thank you!</StyledH2>
+      <TextContainer>
       <StyledText>
         Thanks for confirming your subscription! We hope you have fun using our platform. If you ever need support, please feel free to email us at support@loremgaming.com
       </StyledText>
+      </TextContainer>
     </ThankYouContainer>
   );
 }
